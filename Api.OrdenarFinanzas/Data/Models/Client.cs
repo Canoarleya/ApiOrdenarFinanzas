@@ -15,7 +15,6 @@ namespace Api.OrdenarFinanzas.Data.Models
         [Required]
         public string Apellido1Cliente { get; set; }
 
-        [Required]
         public string Apellido2Cliente { get; set; }
 
         [Required]

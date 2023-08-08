@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.OrdenarFinanzas.Migrations
 {
     [DbContext(typeof(ApiOrdenarFinanzasDBContext))]
-    [Migration("20230723133704_update20230723_01")]
-    partial class update20230723_01
+    [Migration("20230808011430_AddUserRole")]
+    partial class AddUserRole
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,63 @@ namespace Api.OrdenarFinanzas.Migrations
                     b.HasKey("IdCliente");
 
                     b.ToTable("Client", (string)null);
+                });
+
+            modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.UserRole", b =>
+                {
+                    b.Property<long>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("RoleId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("UserRole", (string)null);
+                });
+
+            modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.User", b =>
+                {
+                    b.HasOne("Api.OrdenarFinanzas.Data.Models.UserRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

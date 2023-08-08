@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Api.OrdenarFinanzas.Data;
+using Api.OrdenarFinanzas.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Api.OrdenarFinanzas.Data;
-using Api.OrdenarFinanzas.Data.Models;
 
 namespace Api.OrdenarFinanzas.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientsController : ControllerBase
@@ -25,10 +22,10 @@ namespace Api.OrdenarFinanzas.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Client>>> GetClient()
         {
-          if (_context.Clients == null)
-          {
-              return NotFound();
-          }
+            if (_context.Clients == null)
+            {
+                return NotFound();
+            }
             return await _context.Clients.ToListAsync();
         }
 
@@ -36,10 +33,10 @@ namespace Api.OrdenarFinanzas.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Client>> GetClient(long id)
         {
-          if (_context.Clients == null)
-          {
-              return NotFound();
-          }
+            if (_context.Clients == null)
+            {
+                return NotFound();
+            }
             var client = await _context.Clients.FindAsync(id);
 
             if (client == null)
@@ -86,10 +83,10 @@ namespace Api.OrdenarFinanzas.Controllers
         [HttpPost]
         public async Task<ActionResult<Client>> PostClient(Client client)
         {
-          if (_context.Clients == null)
-          {
-              return Problem("Entity set 'ApiOrdenarFinanzasDBContext.Client'  is null.");
-          }
+            if (_context.Clients == null)
+            {
+                return Problem("Entity set 'ApiOrdenarFinanzasDBContext.Client'  is null.");
+            }
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
 
