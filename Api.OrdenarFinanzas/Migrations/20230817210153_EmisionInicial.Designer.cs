@@ -4,6 +4,7 @@ using Api.OrdenarFinanzas.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.OrdenarFinanzas.Migrations
 {
     [DbContext(typeof(ApiOrdenarFinanzasDBContext))]
-    partial class ApiOrdenarFinanzasDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230817210153_EmisionInicial")]
+    partial class EmisionInicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

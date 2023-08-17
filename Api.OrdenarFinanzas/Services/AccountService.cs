@@ -21,7 +21,7 @@ namespace Api.OrdenarFinanzas.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                new Claim("Id", user.Id.ToString()),
+                new Claim("Id", user.UserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Name, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
              }),

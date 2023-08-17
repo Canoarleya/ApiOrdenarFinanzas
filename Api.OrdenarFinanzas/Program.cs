@@ -19,6 +19,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SeedDb>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IPeriodicidadService, PeriodicidadService>();
+builder.Services.AddScoped<ITipoGastoService, TipoGastoService>();
+builder.Services.AddScoped<IGastoFijoService, GastoFijoService>();
 
 builder.Services.AddSwaggerGen(option =>
 {

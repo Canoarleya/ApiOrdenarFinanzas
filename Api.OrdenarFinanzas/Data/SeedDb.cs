@@ -12,7 +12,6 @@ namespace Api.OrdenarFinanzas.Data
             this.context = context;
             this.random = new Random();
         }
-
         public async Task SeedAsync()
         {
             await this.context.Database.EnsureCreatedAsync();
@@ -21,7 +20,7 @@ namespace Api.OrdenarFinanzas.Data
             {
                 this.AddClient("Cliente Uno","Apellido1", "Apellido2","001","email1@pruebas.com");
                 this.AddClient("Cliente Dos", "Apellido1", "Apellido2", "002", "email2@pruebas.com");
-                this.AddClient("Cliente Tres", "Apellido1", "Apellido2", "003", "email3@pruebas.com");
+                this.AddClient("Cliente Tres", "+", "Apellido2", "003", "email3@pruebas.com");
                 await this.context.SaveChangesAsync();
             }
 
