@@ -1,4 +1,5 @@
-﻿using Api.OrdenarFinanzas.Data.Models;
+﻿using Api.OrdenarFinanzas.Data.Dto;
+using Api.OrdenarFinanzas.Data.Models;
 using Api.OrdenarFinanzas.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -30,16 +31,6 @@ namespace Api.OrdenarFinanzas.Controllers
             {
                 return NotFound();
             }
-            /*
-            var token = _accountService.GenerateJwtToken(user);
-
-            var userDto = new UserDto
-            {
-                UserName = user.UserName,
-                Role = user.Role,
-                Token = token
-            };*/
-
             return Ok(tipoGastoFijo);
         }
 
@@ -59,25 +50,27 @@ namespace Api.OrdenarFinanzas.Controllers
             {
                 return Problem("Error creando la nueva periodicidad");
             }
-
-            /*
-            var userDto = new UserDto
-            {
-                UserName = user.UserName,
-                Role = user.Role,
-                Token = token
-            };*/
-
             return Ok();
         }
 
+        [HttpPost]
+        [Route("PostConsultarGastosFijosPorTipo")]
+        public async Task<ActionResult<IEnumerable<GastoFijoDto>>> PostConsultarGastosFijosPorTipo(long idTipoGastoFijo)
+        {
 
+            if (idTipoGastoFijo == null)
+            {
+                return Problem("Entity set 'ApiOrdenarFinanzasDBContext.periodicidad'  is null.");
+            }
 
+            var _gastosFijo = await _gastoFijoService.PostConsultarGastosFijosPorTipoAsync(idTipoGastoFijo);
 
-
-
-
-
+            if (_gastosFijo == null)
+            {
+                return Problem("Error creando la nueva periodicidad");
+            }
+            return Ok(_gastosFijo);
+        }
 
 
     }

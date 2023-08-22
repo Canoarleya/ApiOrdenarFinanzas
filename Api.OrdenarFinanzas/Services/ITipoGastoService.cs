@@ -7,5 +7,6 @@ namespace Api.OrdenarFinanzas.Services
     {
         Task<ActionResult<IEnumerable<TipoGastoFijo>>> PostObtenerTipoGastosAsync();
         Task<ActionResult<Int64>> PostCrearTipoGastoAsync(TipoGastoFijo tipoGastoFijo);
+
     }
 }

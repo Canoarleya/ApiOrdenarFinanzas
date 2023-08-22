@@ -1,4 +1,5 @@
-﻿using Api.OrdenarFinanzas.Data.Models;
+﻿using Api.OrdenarFinanzas.Data.Dto;
+using Api.OrdenarFinanzas.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.OrdenarFinanzas.Services
@@ -7,6 +8,6 @@ namespace Api.OrdenarFinanzas.Services
     {
         Task<ActionResult<IEnumerable<GastoFijo>>> PostObtenerGastosFijosAsync();
         Task<ActionResult<Int64>> PostCrearGastoFijoAsync(GastoFijo gastoFijo);
-
+        Task<ActionResult<IEnumerable<GastoFijoDto>>> PostConsultarGastosFijosPorTipoAsync(long idTipoGastoFijo);
     }
 }

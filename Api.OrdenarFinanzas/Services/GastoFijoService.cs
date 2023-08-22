@@ -1,4 +1,5 @@
 ﻿using Api.OrdenarFinanzas.Data;
+using Api.OrdenarFinanzas.Data.Dto;
 using Api.OrdenarFinanzas.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,6 @@ namespace Api.OrdenarFinanzas.Services
             return (_context.GastosFijos?.Any(e => e.DescripcionGastoFijo.ToLower().Trim() == descripcion)).GetValueOrDefault();
         }
 
-
         public async Task<ActionResult<IEnumerable<GastoFijo>>> PostObtenerGastosFijosAsync()
         {
             if (_context.GastosFijos == null)
@@ -45,9 +45,33 @@ namespace Api.OrdenarFinanzas.Services
                 return null;
             }
             //var GastosFijos = await _context.GastosFijos.Include(u => u.User).ToListAsync();
-            var gastosFijos = await _context.GastosFijos.Include(u => u.Periodicidad).ToListAsync();
+            var gastosFijos = await _context.GastosFijos.Include(p => p.Periodicidad).Include(t => t.TipoGastoFijo).ToListAsync();
 
             return gastosFijos;
+        }
+
+        public async Task<ActionResult<IEnumerable<GastoFijoDto>>> PostConsultarGastosFijosPorTipoAsync(long idTipoGastoFijo)
+        {
+            if (_context.GastosFijos == null)
+            {
+                return null;
+            }
+            var gastosFijos = await _context.GastosFijos.Include(p => p.Periodicidad).Include(t => t.TipoGastoFijo).Where(gf => gf.IdTipoGastoFijo == idTipoGastoFijo).ToListAsync();
+
+            List<GastoFijoDto> ListaGastoFijoDto = gastosFijos.Select(a => new GastoFijoDto()
+            {
+                IdGastoFijo = a.IdGastoFijo,
+                DescripcionGastoFijo = a.DescripcionGastoFijo,
+                MontoEstimado = a.MontoEstimado,
+                IdPeriodicidad = a.IdPeriodicidad,
+                DescripcionPeriodicidad = a.Periodicidad.DescripcionPeriodicidad,
+                IdTipoGastoFijo = a.IdGastoFijo,
+                DescripcionTpoGastoFijo = a.TipoGastoFijo.DescripcionTipoGastoFijo
+            }).ToList();
+
+
+            
+            return ListaGastoFijoDto;
         }
     }
 }

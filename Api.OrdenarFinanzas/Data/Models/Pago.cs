@@ -18,12 +18,11 @@ namespace Api.OrdenarFinanzas.Data.Models
         [Required]
         public decimal Monto { get; set; }
 
+        public long IdTipoPago { get; set; }
+        [ForeignKey("IdTipoPago")]
+        public virtual TipoPago? TipoPago { get; set; }
+
         [Required]
         public long IdSubtipo { get; set; }
-
-        [ForeignKey("IdTipoPago")]
-        public virtual TipoPago IdTipoPago { get; set; }
-
-
     }
 }

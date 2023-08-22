@@ -15,12 +15,12 @@ namespace Api.OrdenarFinanzas.Data.Models
         [Required]
         public decimal MontoEstimado { get; set; }
 
-        [ForeignKey("IdPeriodicidad")]
         public long IdPeriodicidad { get; set; }
+        [ForeignKey("IdPeriodicidad")]
         public virtual Periodicidad? Periodicidad { get; set; }
 
-        [ForeignKey("IdTipoGastoFijo")]
         public long IdTipoGastoFijo { get; set; }
+        [ForeignKey("IdTipoGastoFijo")]
         public virtual TipoGastoFijo? TipoGastoFijo { get; set; }
 
     }

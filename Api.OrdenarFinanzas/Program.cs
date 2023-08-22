@@ -22,6 +22,9 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPeriodicidadService, PeriodicidadService>();
 builder.Services.AddScoped<ITipoGastoService, TipoGastoService>();
 builder.Services.AddScoped<IGastoFijoService, GastoFijoService>();
+builder.Services.AddScoped<IMetaAhorroService, MetaAhorroService>();
+builder.Services.AddScoped<IPagoService, PagoService>();
+builder.Services.AddScoped<ITipoPagoService, TipoPagoService>();
 
 builder.Services.AddSwaggerGen(option =>
 {

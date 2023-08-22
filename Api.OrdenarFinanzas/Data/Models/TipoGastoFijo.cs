@@ -12,10 +12,9 @@ namespace Api.OrdenarFinanzas.Data.Models
         [Required]
         public string DescripcionTipoGastoFijo { get; set; }
 
-        [ForeignKey("UserId")]
         public long UserId { get; set; }
-
-        public virtual User? User { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
 
     }
 }

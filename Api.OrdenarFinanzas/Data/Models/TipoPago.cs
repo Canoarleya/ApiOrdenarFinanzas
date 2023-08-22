@@ -7,6 +7,7 @@ namespace Api.OrdenarFinanzas.Data.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public long IdTipoPago { get; set; }
 
         [Required]

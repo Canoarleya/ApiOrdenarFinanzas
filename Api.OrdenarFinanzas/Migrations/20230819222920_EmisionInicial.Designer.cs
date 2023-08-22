@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.OrdenarFinanzas.Migrations
 {
     [DbContext(typeof(ApiOrdenarFinanzasDBContext))]
-    [Migration("20230817210153_EmisionInicial")]
+    [Migration("20230819222920_EmisionInicial")]
     partial class EmisionInicial
     {
         /// <inheritdoc />
@@ -83,19 +83,81 @@ namespace Api.OrdenarFinanzas.Migrations
                     b.Property<decimal>("MontoEstimado")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long?>("PeriodicidadIdPeriodicidad")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("TipoGastoFijoIdTipoGastoFijo")
-                        .HasColumnType("bigint");
-
                     b.HasKey("IdGastoFijo");
 
-                    b.HasIndex("PeriodicidadIdPeriodicidad");
+                    b.HasIndex("IdPeriodicidad");
 
-                    b.HasIndex("TipoGastoFijoIdTipoGastoFijo");
+                    b.HasIndex("IdTipoGastoFijo");
 
                     b.ToTable("GastoFijo", (string)null);
+                });
+
+            modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.MetaAhorro", b =>
+                {
+                    b.Property<long>("IdMetaAhorro")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("IdMetaAhorro"));
+
+                    b.Property<decimal>("BaseInicial")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("DescripcionMetaAhorro")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaProyectadaFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("IdPeriodicidad")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("MontoObjetivo")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MontoPeriodico")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IdMetaAhorro");
+
+                    b.HasIndex("IdPeriodicidad");
+
+                    b.ToTable("MetaAhorro", (string)null);
+                });
+
+            modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.Pago", b =>
+                {
+                    b.Property<long>("IdPago")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("IdPago"));
+
+                    b.Property<string>("DescripcionPago")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("IdSubtipo")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("IdTipoPago")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Monto")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IdPago");
+
+                    b.HasIndex("IdTipoPago");
+
+                    b.ToTable("Pago", (string)null);
                 });
 
             modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.Periodicidad", b =>
@@ -135,6 +197,23 @@ namespace Api.OrdenarFinanzas.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("TipoGastoFijo", (string)null);
+                });
+
+            modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.TipoPago", b =>
+                {
+                    b.Property<long>("IdTipoPago")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("IdTipoPago"));
+
+                    b.Property<string>("DescripcionTipoPago")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdTipoPago");
+
+                    b.ToTable("TipoPago", (string)null);
                 });
 
             modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.User", b =>
@@ -187,15 +266,41 @@ namespace Api.OrdenarFinanzas.Migrations
                 {
                     b.HasOne("Api.OrdenarFinanzas.Data.Models.Periodicidad", "Periodicidad")
                         .WithMany()
-                        .HasForeignKey("PeriodicidadIdPeriodicidad");
+                        .HasForeignKey("IdPeriodicidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Api.OrdenarFinanzas.Data.Models.TipoGastoFijo", "TipoGastoFijo")
                         .WithMany()
-                        .HasForeignKey("TipoGastoFijoIdTipoGastoFijo");
+                        .HasForeignKey("IdTipoGastoFijo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Periodicidad");
 
                     b.Navigation("TipoGastoFijo");
+                });
+
+            modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.MetaAhorro", b =>
+                {
+                    b.HasOne("Api.OrdenarFinanzas.Data.Models.Periodicidad", "Periodicidad")
+                        .WithMany()
+                        .HasForeignKey("IdPeriodicidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Periodicidad");
+                });
+
+            modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.Pago", b =>
+                {
+                    b.HasOne("Api.OrdenarFinanzas.Data.Models.TipoPago", "TipoPago")
+                        .WithMany()
+                        .HasForeignKey("IdTipoPago")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoPago");
                 });
 
             modelBuilder.Entity("Api.OrdenarFinanzas.Data.Models.TipoGastoFijo", b =>

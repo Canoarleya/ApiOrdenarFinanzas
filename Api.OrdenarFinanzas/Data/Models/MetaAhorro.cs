@@ -24,8 +24,9 @@ namespace Api.OrdenarFinanzas.Data.Models
         [Required]
         public decimal MontoPeriodico { get; set; }
 
+        public long IdPeriodicidad { get; set; }
         [ForeignKey("IdPeriodicidad")]
-        public virtual Periodicidad IdPeriodicidad { get; set; }
+        public virtual Periodicidad? Periodicidad { get; set; }
 
         [Required]
         public DateTime FechaProyectadaFin { get; set; }

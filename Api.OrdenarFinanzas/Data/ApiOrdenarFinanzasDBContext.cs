@@ -21,6 +21,9 @@ namespace Api.OrdenarFinanzas.Data
         public DbSet<Periodicidad> Periodicidades { get; set; }
         public DbSet<TipoGastoFijo> TiposGastosFijos { get; set; }
         public DbSet<GastoFijo> GastosFijos { get; set; }
+        public DbSet<MetaAhorro> MetasAhorro { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
+        public DbSet<TipoPago> TiposPago { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +33,10 @@ namespace Api.OrdenarFinanzas.Data
             modelBuilder.Entity<Periodicidad>().ToTable(nameof(Periodicidad));
             modelBuilder.Entity<TipoGastoFijo>().ToTable(nameof(TipoGastoFijo));
             modelBuilder.Entity<GastoFijo>().ToTable(nameof(GastoFijo));
+            modelBuilder.Entity<MetaAhorro>().ToTable(nameof(MetaAhorro));
+            modelBuilder.Entity<Pago>().ToTable(nameof(Pago));
+            modelBuilder.Entity<TipoPago>().ToTable(nameof(TipoPago));
+            //modelBuilder.Entity<Pago>().HasNoKey();
             base.OnModelCreating(modelBuilder);
         }
 
